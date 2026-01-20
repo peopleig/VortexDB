@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vortexdb"
+version = "0.1.0"
+description = "Python client for VortexDB"
+readme = "README.md"
+requires-python = ">=3.10"
+
+keywords = ["vector-database", "grpc", "embeddings", "search"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "grpcio>=1.60",
+    "grpcio-tools>=1.60",
+    "protobuf>=4.25",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vortexdb*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
