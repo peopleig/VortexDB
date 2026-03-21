@@ -1,4 +1,4 @@
-FROM lukemathwalker/cargo-chef:latest-rust-1.88-bookworm AS chef
+FROM lukemathwalker/cargo-chef:latest-rust-1.88-bookworm@sha256:d184d41fd934afd282bf8f04b602aaa952af88341c48b8738b0c0a85ac7a6cec AS chef
 
 WORKDIR /app
 
@@ -11,16 +11,13 @@ RUN apt-get update && apt-get install -y \
     build-essential \
  && rm -rf /var/lib/apt/lists/*
 
-
 # Planner Stage
 FROM chef AS planner
 
 COPY Cargo.toml Cargo.lock ./
 COPY crates ./crates
 
-
 RUN cargo chef prepare --recipe-path recipe.json
-
 
 # Builder Stage
 FROM chef AS builder
@@ -38,7 +35,7 @@ RUN cargo build --release --bin server
 
 
 # Runtime Stage
-FROM lukemathwalker/cargo-chef:latest-rust-1.88-bookworm AS runtime
+FROM debian:bookworm-slim@sha256:f06537653ac770703bc45b4b113475bd402f451e85223f0f2837acbf89ab020a AS runtime
 
 RUN apt-get update && apt-get install -y \
     ca-certificates \
