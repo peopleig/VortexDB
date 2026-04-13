@@ -56,6 +56,11 @@ async with AsyncVortexDB(
         payload=Payload.text("hello async vortex"),
     )
 ```
+### Batch Insertion and Search Support  
+
+The client now supports batch insertion and batch search queries.  
+Methods of usage and examples available in:  
+```examples/batch_insert_usage.py``` & ```examples/search_query_usage.py```  
 
 ---
 
@@ -115,6 +120,22 @@ Raises
 
 ---
 
+#### **Batch Insert**
+
+Insert multiple vectors with payloads in a single request  
+```
+batch_insert(*, items: list[tuple[DenseVector, Payload]]) -> list[str]
+```
+
+Returns
+- List of `point_id` (UUID string)
+
+Raises
+- `TypeError` if input structure is invalid
+- gRPC-mapped errors (see Error Handling)
+
+---
+
 #### **Get**
 
 Fetch a point by its ID
@@ -146,6 +167,32 @@ Returns
 Raises
 - `TypeError` if `vector` is not a `DenseVector`
 - `InvalidArgumentError` for invalid parameters
+
+---
+
+#### **Batch Search**
+
+Search for nearest neighbours for multiple queries in a single request
+```
+batch_search(
+    *,
+    queries,
+    similarity: Similarity | None = None,
+    limit: int | None = None,
+) -> list[list[str]]
+```
+
+Returns 
+- `TypeError` for invalid query formats
+- `ValueError` if required parameters are missing
+
+Supported Input Formats:  
+The `queries` parameter is flexible and supports multiple formats:
+- List of `SearchQuery` objects
+- List of `(DenseVector, Similarity, Limit)` tuples
+- List of `(DenseVector, Similarity)` tuples with a global `Limit`
+- List of `(DenseVector, Limit)` tuples with a global `Similarity`
+- List of `DenseVector` with global `Similarity` and `Limit`
 
 ---
 
@@ -211,6 +258,19 @@ All fields are directly accessible:
 - `point.id`
 - `point.vector`
 - `point.payload`  
+
+---
+
+### `SearchQuery`
+
+```
+SearchQuery(
+    vector: DenseVector,
+    similarity: Similarity,
+    limit: int,
+)
+```
+Structured representation of a search request  
 
 ---
 
