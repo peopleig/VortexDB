@@ -32,8 +32,7 @@ class AsyncVortexDB:
         """
         if not isinstance(vector, DenseVector):
             raise TypeError(
-                "vector must be a DenseVector. "
-                "Use: DenseVector([1.0, 2.0, 3.0])"
+                "vector must be a DenseVector. Use: DenseVector([1.0, 2.0, 3.0])"
             )
 
         request = proto.build_insert_request(
@@ -48,7 +47,9 @@ class AsyncVortexDB:
 
         return response.id.value
 
-    async def batch_insert(self, *, items: list[tuple[DenseVector, Payload]]) -> list[str]:
+    async def batch_insert(
+        self, *, items: list[tuple[DenseVector, Payload]]
+    ) -> list[str]:
         """
         Insert multiple vectors.
         Returns: list of point_id (str)
@@ -111,8 +112,7 @@ class AsyncVortexDB:
         else:
             if not isinstance(vector, DenseVector):
                 raise TypeError(
-                    "vector must be a DenseVector. "
-                    "Use: DenseVector([1.0, 2.0, 3.0])"
+                    "vector must be a DenseVector. Use: DenseVector([1.0, 2.0, 3.0])"
                 )
             if not isinstance(similarity, Similarity):
                 raise TypeError("similarity must be a Similarity enum")
@@ -154,7 +154,11 @@ class AsyncVortexDB:
         normalized = []
 
         for i, q in enumerate(queries):
-            if hasattr(q, "vector") and hasattr(q, "similarity") and hasattr(q, "limit"):
+            if (
+                hasattr(q, "vector")
+                and hasattr(q, "similarity")
+                and hasattr(q, "limit")
+            ):
                 normalized.append((q.vector, q.similarity, q.limit))
                 continue
 

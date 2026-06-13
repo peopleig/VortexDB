@@ -28,6 +28,7 @@ __all__ = [
     "Point",
     "Similarity",
     "SearchQuery",
+    "to_dense_vectors",
     "VortexDBError",
     "AuthenticationError",
     "NotFoundError",

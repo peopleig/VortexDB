@@ -5,7 +5,14 @@ import pytest
 
 from vortexdb.async_client import AsyncVortexDB
 from vortexdb.async_connection import AsyncGRPCConnection
-from vortexdb.models import ContentType, DenseVector, Payload, Point, Similarity, SearchQuery
+from vortexdb.models import (
+    ContentType,
+    DenseVector,
+    Payload,
+    Point,
+    Similarity,
+    SearchQuery,
+)
 
 
 @pytest.fixture
@@ -60,6 +67,7 @@ def test_async_insert_rejects_invalid_vector(client):
 
 # Batch Insert
 
+
 def test_async_batch_insert_success(client, mock_connection):
     async def run():
         response = Mock()
@@ -111,6 +119,7 @@ def test_async_batch_insert_invalid_vector(client):
 
 # Get
 
+
 def test_async_get_point_success(client, mock_connection):
     async def run():
         proto_point = Mock()
@@ -143,6 +152,7 @@ def test_async_get_point_not_found(client, mock_connection):
 
 # Delete
 
+
 def test_async_delete_success(client, mock_connection):
     async def run():
         mock_connection.call.return_value = None
@@ -155,6 +165,7 @@ def test_async_delete_success(client, mock_connection):
 
 
 # Search
+
 
 def test_async_search_success(client, mock_connection):
     async def run():
@@ -223,6 +234,7 @@ def test_async_search_invalid_vector(client):
 
 # Batch Search
 
+
 def test_async_batch_search_full_tuple(client, mock_connection):
     async def run():
         mock_connection.call.return_value = Mock(
@@ -275,7 +287,9 @@ def test_async_batch_search_vectors_with_global_params(client, mock_connection):
     asyncio.run(run())
 
 
-def test_async_batch_search_vector_similarity_with_global_limit(client, mock_connection):
+def test_async_batch_search_vector_similarity_with_global_limit(
+    client, mock_connection
+):
     async def run():
         mock_connection.call.return_value = Mock(
             results=[
@@ -342,6 +356,7 @@ def test_async_batch_search_invalid_format(client):
 
 
 # Close / Context Manager
+
 
 def test_async_close_closes_connection(client, mock_connection):
     async def run():

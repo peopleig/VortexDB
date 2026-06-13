@@ -1,7 +1,7 @@
 import asyncio
 
 from vortexdb import AsyncVortexDB
-from vortexdb import DenseVector, Payload, Similarity, SearchQuery, to_dense_vectors
+from vortexdb import Payload, Similarity, SearchQuery, to_dense_vectors
 
 
 async def main():
@@ -9,7 +9,6 @@ async def main():
         grpc_url="localhost:50051",
         api_key="my-secret-password",
     ) as db:
-
         raw_vectors = [
             [0.1, 0.2, 0.3],
             [0.4, 0.5, 0.6],

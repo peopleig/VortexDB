@@ -1,4 +1,4 @@
-from typing import List, Sequence
+from typing import List
 
 from vortexdb.connection import GRPCConnection
 from vortexdb.config import VortexDBConfig
@@ -12,8 +12,9 @@ from vortexdb.models import (
 
 from vortexdb import protoutils as proto
 
+
 class VortexDB:
-    """ High-level Python client for VortexDB """
+    """High-level Python client for VortexDB"""
 
     def __init__(
         self,
@@ -22,7 +23,7 @@ class VortexDB:
         api_key: str | None = None,
         timeout: float | None = None,
     ):
-    # Config order followed - args -> env vars -> defaults
+        # Config order followed - args -> env vars -> defaults
         self._config = VortexDBConfig.from_env(
             grpc_url=grpc_url,
             api_key=api_key,
@@ -31,7 +32,7 @@ class VortexDB:
 
         self._conn = GRPCConnection(self._config)
 
-# The basic operations
+    # The basic operations
 
     def insert(self, *, vector: DenseVector, payload: Payload) -> str:
         """
@@ -151,7 +152,11 @@ class VortexDB:
         normalized = []
 
         for i, q in enumerate(queries):
-            if hasattr(q, "vector") and hasattr(q, "similarity") and hasattr(q, "limit"):
+            if (
+                hasattr(q, "vector")
+                and hasattr(q, "similarity")
+                and hasattr(q, "limit")
+            ):
                 normalized.append((q.vector, q.similarity, q.limit))
                 continue
 
@@ -195,8 +200,7 @@ class VortexDB:
     def _validate_dense_vector(vector: DenseVector) -> None:
         if not isinstance(vector, DenseVector):
             raise TypeError(
-                "vector must be a DenseVector. "
-                "Use: DenseVector([1.0, 2.0, 3.0])"
+                "vector must be a DenseVector. Use: DenseVector([1.0, 2.0, 3.0])"
             )
 
     def close(self) -> None:

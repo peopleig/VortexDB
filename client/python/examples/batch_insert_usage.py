@@ -1,5 +1,5 @@
 from vortexdb import VortexDB
-from vortexdb import DenseVector, Payload, to_dense_vectors
+from vortexdb import Payload, to_dense_vectors
 
 
 def main():

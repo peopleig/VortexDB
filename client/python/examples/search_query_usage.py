@@ -1,5 +1,5 @@
 from vortexdb import VortexDB
-from vortexdb import DenseVector, Similarity, SearchQuery, to_dense_vectors
+from vortexdb import Similarity, SearchQuery, to_dense_vectors
 
 
 def main():
