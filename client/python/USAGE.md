@@ -41,10 +41,10 @@ Example available in:
 
 ### Async Client Support
 
-For async applications, use `AsyncVortexDB`. It mirrors the synchronous client API and uses `grpc.aio` under the hood.
+For async applications, use `AsyncVortexDB`. It mirrors the synchronous client API and uses `grpc.aio` under the hood, including full support for `batch_insert` and `batch_search`.
 
-Example available in:
-```examples/async_usage.py```
+Examples available in:
+```examples/async_usage.py``` & ```examples/async_batch_usage.py```
 
 ```python
 async with AsyncVortexDB(
@@ -56,11 +56,12 @@ async with AsyncVortexDB(
         payload=Payload.text("hello async vortex"),
     )
 ```
+
 ### Batch Insertion and Search Support  
 
-The client now supports batch insertion and batch search queries.  
+Both `VortexDB` and `AsyncVortexDB` support batch insertion and batch search queries.  
 Methods of usage and examples available in:  
-```examples/batch_insert_usage.py``` & ```examples/search_query_usage.py```  
+```examples/batch_insert_usage.py``` & ```examples/search_query_usage.py``` & ```examples/async_batch_usage.py```  
 
 ---
 
@@ -76,8 +77,10 @@ Async client class for I/O-heavy applications. It has the same constructor and m
 
 ```
 await db.insert(...)
+await db.batch_insert(...)
 await db.get(...)
 await db.search(...)
+await db.batch_search(...)
 await db.delete(...)
 await db.close()
 ```
@@ -371,4 +374,4 @@ python -m grpc_tools.protoc \
 
 After running this:  
 - `vector_db_pb2_grpc.py` and `vector_db_pb2.py` will be updated
-- No other client code should need changes 
+- No other client code should need changes
